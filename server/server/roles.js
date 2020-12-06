@@ -1,0 +1,50 @@
+const AccessControl = require('accesscontrol')
+const ac = new AccessControl()
+
+exports.roles = (function(){
+    ac.grant('basic')
+    .readOwn('profile', ['_id', 'email', 'phone', '!password', '!role'])
+    .updateOwn('profile', ['phone', 'password', '!role'])
+    .readAny('business')
+
+    ac.grant('manufacturer')
+    .readOwn('profile')
+    .updateOwn('profile')
+    // .readAny('profile')
+
+    ac.grant('supervisor')
+    .extend('basic')
+    .extend('manufacturer')
+    .readOwn('profile', ['email', 'phone', 'role'])
+    .readAny('business')
+
+    ac.grant('admin')
+    .extend('basic')
+    .extend('supervisor')
+    .extend('manufacturer')
+    .updateAny('profile')
+    .deleteAny('profile', 'business')
+    .createAny('profile')
+    .grant('basic')
+    .grant('supervisor')
+    .grant('manufacturer')
+    .readOwn('profle')
+    .readAny('profile')
+
+    ac.grant('finance')
+    ac.grant('customer service')
+    ac.grant('business analyst')
+    ac.grant('inventory manager')
+    .createAny('product')
+    .deleteAny('product')
+
+    ac.grant('logistics')
+    ac.grant('retail')
+    ac.grant('IT Technician')
+    ac.grant('delivery')
+    ac.grant('marketing')
+    ac.grant('internship')
+    ac.grant('Digital Operations')
+
+    return ac
+})()

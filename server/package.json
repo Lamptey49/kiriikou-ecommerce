@@ -1,0 +1,39 @@
+{
+  "name": "kiriikou-ecommerce",
+  "version": "1.0.0",
+  "description": "An e-commerce api to manage business to business entities",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lamptey49/kiriikou-ecommerce.git"
+  },
+  "keywords": [
+    "E-Commerce",
+    "Manufacturers"
+  ],
+  "author": "Phinehas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lamptey49/kiriikou-ecommerce/issues"
+  },
+  "homepage": "https://github.com/Lamptey49/kiriikou-ecommerce#readme",
+  "dependencies": {
+    "accesscontrol": "^2.2.1",
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "extend": "^3.0.2",
+    "formidable": "^1.2.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.16",
+    "nodemon": "^2.0.6",
+    "socket.io": "^2.3.0"
+  }
+}

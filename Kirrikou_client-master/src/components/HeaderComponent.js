@@ -1,8 +1,13 @@
-import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem, 
-    Button, } from 'reactstrap';
+import React from 'react'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import IconButton from '@material-ui/core/IconButton'
+// import HomeIcon from '@material-ui/icons/Home'
+import Button from '@material-ui/core/Button'
 import auth from './../auth/auth-helper'
+import {Link, withRouter} from 'react-router-dom'
+// import CartIcon from '@material-ui/icons/ShoppingCart'
+// import Badge from '@material-ui/core/Badge'
 import logo from './../assets/images/kiriikou.jpg';
 
 
@@ -23,54 +28,50 @@ const isPartActive = (history, path) => {
 
 
 const Header = withRouter(({history}) =>(
-    <div>
-        <Navbar  color="light" light expand="md">
-            <div className="container">
-                <NavbarToggler  />
-                <NavbarBrand className="mr-auto" style={isActive(history, '/')} href="/"><img src={logo} height='90' width='170px' alt='Kiriikou.com' /></NavbarBrand>
-                <Collapse  navbar>
-                    <Nav className="ml-auto" navbar>
-                        <NavItem>     
-                    {/* <div style={{'position':'absolute',  'right': '20px'}}> */}
-                        <span >
-                       
-                        {
-                            !auth.isAuthenticated() && (<span>
-                            <Link to="/signup">
-                                <Button style={isActive(history, "/signup")}>Sign up
-                                </Button>
-                            </Link>
-                            &nbsp;
-                            <Link to="/auth/signin">
-                                <Button style={isActive(history, "/signin")}>Sign In
-                                </Button>
-                            </Link>
-                            {/* <Link to='/business/register/new'>
-                                <Button variant="secondary" size="md" style={isActive(history, '/business/register/new')} active>
-                                    Connect on Kiriikou
-                                </Button>
-                            </Link> */}
-                            </span>)
-                        }
-                        {
-                            auth.isAuthenticated() && (<span>
-                            {auth.isAuthenticated().user.seller && (<Link to="/business/shops"><Button style={isPartActive(history, "/seller/")}>My Shop</Button></Link>)}
-                            <Link to={"/user/" + auth.isAuthenticated().user._id}>
-                                <Button style={isActive(history, "/user/" + auth.isAuthenticated().user._id)}>My Profile</Button>
-                            </Link>
-                            <Button color="inherit" onClick={() => {
-                                auth.clearJWT(() => history.push('/'))
-                                }}>Sign out</Button>
-                            </span>)
-                        }
-                        </span>
-                        {/* </div> */}
-                        </NavItem>
-                    </Nav>
-                </Collapse>
-            </div>
-        </Navbar>
-    </div>
+    
+        <AppBar position="static" >
+    <Toolbar>
+        <div>
+            <Link to="/">
+            <IconButton aria-label="Home" style={isActive(history, "/")}>
+                <img src={logo} alt='Kiriikou' height='50px' width='100px' />
+                {/* <HomeIcon/> */}
+            </IconButton>
+            </Link>
+  
+           
+      </div>
+      <div style={{'position':'absolute', 'right': '10px'}}><span style={{'float': 'right'}}>
+      {
+        !auth.isAuthenticated() && (<span>
+          <Link to="/signup">
+            <Button style={isActive(history, "/signup")}>Sign up
+            </Button>
+          </Link>
+          <Link to="/auth/signin">
+            <Button style={isActive(history, "/auth/signin")}>Sign In
+            </Button>
+          </Link>
+          <Link to="/business/register/new">
+            <Button style={isActive(history, "/business/register/new")}>Connect to Kiriikou
+            </Button>
+          </Link>
+        </span>)
+      }
+      {
+        auth.isAuthenticated() && (<span>
+          {auth.isAuthenticated().user.seller && (<Link to="/seller/shops"><Button style={isPartActive(history, "/seller/")}>My Shops</Button></Link>)}
+          <Link to={"/user/" + auth.isAuthenticated().user._id}>
+            <Button style={isActive(history, "/user/" + auth.isAuthenticated().user._id)}>My Profile</Button>
+          </Link>
+          <Button color="inherit" onClick={() => {
+              auth.clearJWT(() => history.push('/'))
+            }}>Sign out</Button>
+        </span>)
+      }
+      </span></div>
+    </Toolbar>
+  </AppBar>
 )) 
 
 export default Header;

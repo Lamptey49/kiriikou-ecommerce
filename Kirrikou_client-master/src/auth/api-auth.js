@@ -1,10 +1,11 @@
 const signin = async (user) => {
     try {
-      let response = await fetch('/auth/signin/', {
+      let response = await fetch('/auth/signin', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'access-control-allow-orgin':'*'
         },
         credentials: 'include',
         body: JSON.stringify(user)
@@ -33,7 +34,7 @@ const adminSignin = async (user) => {
   
   const signout = async () => {
     try {
-      let response = await fetch('/auth/signout/', { method: 'GET' })
+      let response = await fetch('http://localhost:4000/auth/signout/', { method: 'GET' })
       return await response.json()
     } catch(err) {
       console.log(err)

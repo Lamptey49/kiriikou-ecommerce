@@ -4,7 +4,7 @@ import auth from './auth-helper'
 import {Redirect} from 'react-router-dom'
 
 import {  
-    Button, FormGroup, Form, Label, Input,  } from 'reactstrap';
+    Button, FormGroup,  Label, Input,  } from 'reactstrap';
 export default function Signin(props){
     const [values, setValues] = useState({
         email: '',
@@ -17,16 +17,21 @@ export default function Signin(props){
             email : values.email || undefined ,
             password : values.password || undefined
         }
-        signin(user).then((data) => {
-            if(data.error){
-                setValues({...values, error: data.error})
-            }
-            else{
-                auth.authenticate(data, ()=>{
-                    setValues({...values, error: '', redirectToReferrer:true})
-                })
-            }
-        })
+        try {
+            signin(user).then((data) => {
+                if(data && data.error){
+                    setValues({...values, error: data.error})
+                }
+                else{
+                    auth.authenticate(data, ()=>{
+                        setValues({...values, error: '', redirectToReferrer:true})
+                    })
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+        
     }
     const handleChange = name => event => {
         setValues({ ...values, [name]: event.target.value})
@@ -41,10 +46,10 @@ export default function Signin(props){
         return (<Redirect to={from} /> )
     }
     return (
-        <div>
+     
         <div className='card card-center'> 
-            <Form>
-                
+            <div>
+
                 <h2 className='center'>Login</h2>
             <FormGroup>
                 <Label htmlFor="username">Email</Label>
@@ -73,9 +78,8 @@ export default function Signin(props){
                     </Label>
                 )}
             </FormGroup>
-            <Button type="submit" className='button' value="submit" onClick={clickSubmit} color="primary">Login</Button>
-            </Form>      
-        </div>
+            <Button type="submit" className='button' value="submit" onClick={clickSubmit} color="primary">Login</Button>     
+            </div>
         </div>    
     )
 }
